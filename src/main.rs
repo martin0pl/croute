@@ -4,4 +4,14 @@ fn main() {
     const VERSION:&str = "0.1";
 
     let args: Vec<String> = env::args().skip(1).collect();
+
+    // If there is no command
+    if args.len() == 0
+    {
+        println!("Croute");
+        println!("Developper : martin0pl");
+        println!("Programming language : Rust");
+        println!("Version : {}",VERSION);
+        println!("Github repository : https://github.com/martin0pl/croute");
+    }
 }
