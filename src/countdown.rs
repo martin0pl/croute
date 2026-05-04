@@ -6,7 +6,7 @@ pub struct Countdown {
 }
 
 impl Countdown {
-    pub fn new(title: String, date: Option<DateTime<Utc>>) {
+    pub fn new(title: String, date: Option<DateTime<Utc>>) -> Countdown {
         Self {
             title : title,
             date : date

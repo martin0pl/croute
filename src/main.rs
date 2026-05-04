@@ -1,9 +1,15 @@
+mod countdown;
+
 use std::env;
+
+use countdown::Countdown;
 
 fn main() {
     const VERSION:&str = "0.1";
 
     let args: Vec<String> = env::args().skip(1).collect();
+
+    let countdowns: Vec<Countdown> = Vec::new();
 
     // If there is no command
     if args.len() == 0
