@@ -1,3 +1,5 @@
+use std::env;
+
 fn main() {
-    println!("Hello, world!");
+    const VERSION:&str = "0.1";
 }
