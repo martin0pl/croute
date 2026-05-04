@@ -14,4 +14,11 @@ fn main() {
         println!("Version : {}",VERSION);
         println!("Github repository : https://github.com/martin0pl/croute");
     }
+    else
+    {
+        // croute version
+        if args.len() == 1 && args[0] == "version" {
+            println!("Version : {}",VERSION);
+        }
+    }
 }
