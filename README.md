@@ -10,7 +10,8 @@ Download the binary file and put in a directory which is in your PATH
 
 ### General
 
-| Command                                     | Action                           |
-| :-----------------------------------------: | :------------------------------: |
-| `croute`                                    | Show all info                    |
-| `croute version`                            | Show the current version         |
+| Command                                           | Action                           |
+| :-----------------------------------------------: | :------------------------------: |
+| `croute`                                          | Show all info                    |
+| `croute version`                                  | Show the current version         |
+| `croute new "countdown name" YYYY-MM-DD HH:MM:SS` | Create a new countdown           |
