@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc, Duration};
+use chrono::{DateTime, Utc};
 
 pub struct Countdown {
     title: String,
