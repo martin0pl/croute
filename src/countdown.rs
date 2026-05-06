@@ -1,5 +1,7 @@
 use chrono::{DateTime, Utc, Duration};
+use serde::{Serialize, Deserialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct Countdown {
     title: String,
     date: DateTime<Utc>
