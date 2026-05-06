@@ -15,7 +15,6 @@ fn load_countdowns() -> Vec<Countdown> {
     if let Ok(mut file) = File::open(SAVE_FILE) {
         let mut contents = String::new();
         if file.read_to_string(&mut contents).is_ok() {
-            // Tente de désérialiser le JSON en vecteur de Countdown
             if let Ok(data) = serde_json::from_str(&contents) {
                 return data;
             }
