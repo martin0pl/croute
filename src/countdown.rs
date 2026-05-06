@@ -16,4 +16,8 @@ impl Countdown {
     pub fn get_time_left(&self) -> Duration {
         return self.date - Utc::now();
     }
+
+    pub fn to_string(&self) -> String {
+        return format!("{} : {}", self.title, self.get_time_left())
+    }
 }
