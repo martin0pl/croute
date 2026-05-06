@@ -13,7 +13,7 @@ impl Countdown {
         }
     }
 
-    pub fn get_time_left(&self, date: DateTime<Utc>) -> Duration {
-        return date - Utc::now();
+    pub fn get_time_left(&self) -> Duration {
+        return self.date - Utc::now();
     }
 }
