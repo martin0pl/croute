@@ -29,6 +29,12 @@ fn main() {
         if args.len() == 1 && args[0] == "version" {
             println!("Version : {}",VERSION);
         }
+        // croute list
+        if args.len() == 1 && args[0] == "list" {
+            for countdown in countdowns {
+                println!("{}", countdown.to_string());
+            }
+        }
         // croute new "countdown name" YYYY-MM-DD
         else if args.len() == 3 && args[0] == "new" {
             let title: String = args[1].clone();
