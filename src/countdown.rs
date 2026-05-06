@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Utc, Duration};
 
 pub struct Countdown {
     title: String,
@@ -11,5 +11,9 @@ impl Countdown {
             title : title,
             date : date
         }
+    }
+
+    pub fn get_time_left(&self, date: DateTime<Utc>) -> Duration {
+        return date - Utc::now();
     }
 }
