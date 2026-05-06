@@ -29,6 +29,15 @@ fn main() {
         if args.len() == 1 && args[0] == "version" {
             println!("Version : {}",VERSION);
         }
+        // croute new "countdown name" YYYY-MM-DD
+        else if args.len() == 3 && args[0] == "new" {
+            let title: String = args[1].clone();
+
+            let date_str: String = args[2].clone() + " " + "00:00:00";
+            let date: DateTime<Utc> = str_to_datetime(date_str);
+
+            countdowns.push(Countdown::new(title, date));
+        }
         // croute new "countdown name" YYYY-MM-DD HH:MM:SS
         else if args.len() == 4 && args[0] == "new" {
             let title: String = args[1].clone();
