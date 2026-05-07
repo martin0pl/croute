@@ -9,11 +9,10 @@ use chrono::{DateTime, Utc};
 use countdown::Countdown;
 use utils::str_to_datetime;
 
-const VERSION:&str = "0.6";
-const SAVE_FILE: &str = ".croute-save.json";
+const VERSION:&str = "0.7";
 
-fn load_countdowns() -> Vec<Countdown> {
-    if let Ok(mut file) = File::open(SAVE_FILE) {
+fn load_countdowns(save_file: &str) -> Vec<Countdown> {
+    if let Ok(mut file) = File::open(save_file) {
         let mut contents = String::new();
         if file.read_to_string(&mut contents).is_ok() {
             if let Ok(data) = serde_json::from_str(&contents) {
@@ -24,9 +23,9 @@ fn load_countdowns() -> Vec<Countdown> {
     Vec::new()
 }
 
-fn save_countdowns(countdowns: &Vec<Countdown>) {
+fn save_countdowns(countdowns: &Vec<Countdown>, save_file: &str) {
     if let Ok(json) = serde_json::to_string_pretty(countdowns) {
-        if let Ok(mut file) = File::create(SAVE_FILE) {
+        if let Ok(mut file) = File::create(save_file) {
             let _ = file.write_all(json.as_bytes());
         }
     }
@@ -35,7 +34,10 @@ fn save_countdowns(countdowns: &Vec<Countdown>) {
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
 
-    let mut countdowns: Vec<Countdown> = load_countdowns();
+    let home_dir = env::var("HOME").expect("Impossible to reach HOME directory");
+    let save_file = format!("{}/.croute-save.json", home_dir);
+
+    let mut countdowns: Vec<Countdown> = load_countdowns(&save_file);
 
     // If there is no command
     if args.len() == 0
@@ -66,7 +68,7 @@ fn main() {
             let date: DateTime<Utc> = str_to_datetime(date_str);
 
             countdowns.push(Countdown::new(title, date));
-            save_countdowns(&countdowns);
+            save_countdowns(&countdowns, &save_file);
             println!("Countdown added!");
         }
         // croute new "countdown name" YYYY-MM-DD HH:MM:SS
@@ -77,7 +79,7 @@ fn main() {
             let date: DateTime<Utc> = str_to_datetime(date_str);
 
             countdowns.push(Countdown::new(title, date));
-            save_countdowns(&countdowns);
+            save_countdowns(&countdowns, &save_file);
             println!("Countdown added!");
         }
     }
