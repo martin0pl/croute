@@ -1,3 +1,5 @@
+use crate::utils::format_duration;
+
 use chrono::{DateTime, Utc, Duration};
 use serde::{Serialize, Deserialize};
 
@@ -20,6 +22,6 @@ impl Countdown {
     }
 
     pub fn to_string(&self) -> String {
-        return format!("{} : {}", self.title, self.get_time_left())
+        return format!("{} in {}", self.title, format_duration(self.get_time_left()))
     }
 }
