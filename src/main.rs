@@ -7,9 +7,9 @@ use std::io::{Read, Write};
 use chrono::{DateTime, Utc};
 
 use countdown::Countdown;
-use utils::str_to_datetime;
+use utils::{str_to_datetime, sort_countdowns_by_date};
 
-const VERSION:&str = "0.7.1";
+const VERSION:&str = "0.7.2";
 
 fn load_countdowns(save_file: &str) -> Vec<Countdown> {
     if let Ok(mut file) = File::open(save_file) {
@@ -68,7 +68,11 @@ fn main() {
             let date: DateTime<Utc> = str_to_datetime(date_str);
 
             countdowns.push(Countdown::new(title, date));
+
+            sort_countdowns_by_date(&mut countdowns);
+
             save_countdowns(&countdowns, &save_file);
+
             println!("Countdown added!");
         }
         // croute new "countdown name" YYYY-MM-DD HH:MM:SS
@@ -79,7 +83,11 @@ fn main() {
             let date: DateTime<Utc> = str_to_datetime(date_str);
 
             countdowns.push(Countdown::new(title, date));
+
+            sort_countdowns_by_date(&mut countdowns);
+
             save_countdowns(&countdowns, &save_file);
+
             println!("Countdown added!");
         }
     }

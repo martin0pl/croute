@@ -24,4 +24,8 @@ impl Countdown {
     pub fn to_string(&self) -> String {
         return format!("{} in {}", self.title, format_duration(self.get_time_left()))
     }
+
+    pub fn get_date(&self) -> &DateTime<Utc> {
+            &self.date
+        }
 }

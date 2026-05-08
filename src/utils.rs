@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc, TimeZone, Duration};
+use crate::countdown::Countdown;
 
 pub fn str_to_datetime(date_str: String) -> DateTime<Utc> {
     let format = "%Y-%m-%d %H:%M:%S";
@@ -45,4 +46,8 @@ pub fn format_duration(d: Duration) -> String {
 
     let prefix = if d.num_seconds() < 0 { "- " } else { "" };
     format!("{}{}", prefix, parts.join(" "))
+}
+
+pub fn sort_countdowns_by_date(countdowns: &mut Vec<Countdown>) {
+    countdowns.sort_by_key(|c| *c.get_date());
 }
