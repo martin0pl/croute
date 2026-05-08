@@ -4,12 +4,12 @@ mod utils;
 use std::env;
 use std::fs::File;
 use std::io::{Read, Write};
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Utc, Duration};
 
 use countdown::Countdown;
 use utils::{str_to_datetime, sort_countdowns_by_date};
 
-const VERSION:&str = "0.7.3";
+const VERSION:&str = "0.8.0";
 
 fn load_countdowns(save_file: &str) -> Vec<Countdown> {
     if let Ok(mut file) = File::open(save_file) {
@@ -59,6 +59,24 @@ fn main() {
             for countdown in countdowns {
                 println!("{}", countdown.to_string());
             }
+        }
+        // croute delete passed
+        else if args.len() == 2 && args[0] == "delete" && args[1] == "passed" {
+
+            let mut has_been_modified: bool = false;
+
+            for i in 0..(countdowns.len()-1) {
+                if countdowns[i].get_time_left() < Duration::zero() {
+                    countdowns.remove(i);
+                    has_been_modified = true;
+                }
+            }
+
+            if has_been_modified {
+                save_countdowns(&countdowns, &save_file);
+            }
+
+            println!("Passed countdowns deleted!");
         }
         // croute new "countdown name" YYYY-MM-DD
         else if args.len() == 3 && args[0] == "new" {
