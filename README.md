@@ -20,4 +20,5 @@ Download the binary file and put in a directory which is in your PATH
 | :-----------------------------------------------: | :------------------------------: |
 | `croute new "countdown name" YYYY-MM-DD`          | Create a new countdown           |
 | `croute new "countdown name" YYYY-MM-DD HH:MM:SS` | Create a new countdown           |
-|`croute delete passed`                             | Delete all the passed countdowns |
+| `croute delete passed`                            | Delete all the passed countdowns |
+| `croute delete "countdown name"`                  | Delete a countdown by his name   |

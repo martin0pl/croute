@@ -26,6 +26,10 @@ impl Countdown {
     }
 
     pub fn get_date(&self) -> &DateTime<Utc> {
-            &self.date
-        }
+        &self.date
+    }
+
+    pub fn get_title(&self) -> String {
+        self.title.clone()
+    }
 }
