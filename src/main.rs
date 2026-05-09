@@ -9,7 +9,7 @@ use chrono::{DateTime, Utc, Duration};
 use countdown::Countdown;
 use utils::{str_to_datetime, sort_countdowns_by_date};
 
-const VERSION:&str = "0.9.1";
+const VERSION:&str = "0.9.2";
 
 fn load_countdowns(save_file: &str) -> Vec<Countdown> {
     if let Ok(mut file) = File::open(save_file) {
@@ -62,21 +62,16 @@ fn main() {
         }
         // croute delete passed
         else if args.len() == 2 && args[0] == "delete" && args[1] == "passed" {
-
-            let mut has_been_modified: bool = false;
-
-            for i in 0..(countdowns.len()-1) {
-                if countdowns[i].get_time_left() < Duration::zero() {
-                    countdowns.remove(i);
-                    has_been_modified = true;
-                }
-            }
-
-            if has_been_modified {
+            let initial_len = countdowns.len();
+            
+            countdowns.retain(|c| c.get_time_left() >= Duration::zero());
+        
+            if countdowns.len() < initial_len {
                 save_countdowns(&countdowns, &save_file);
+                println!("Passed countdowns deleted!");
+            } else {
+                println!("No passed countdowns to delete.");
             }
-
-            println!("Passed countdowns deleted!");
         }
         // croute delete "countdown name"
         else if args.len() == 2 && args[0] == "delete" && args[1] != "passed" {
