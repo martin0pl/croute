@@ -22,7 +22,12 @@ impl Countdown {
     }
 
     pub fn to_string(&self) -> String {
-        return format!("{} in {}", self.title, format_duration(self.get_time_left()))
+        if self.get_time_left() < Duration::zero() {
+            return format!("{} {} ago", self.title, format_duration(self.get_time_left()))
+        } 
+        else {
+            return format!("{} in {}", self.title, format_duration(self.get_time_left()))
+        }
     }
 
     pub fn get_date(&self) -> &DateTime<Utc> {

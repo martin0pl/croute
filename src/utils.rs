@@ -44,8 +44,7 @@ pub fn format_duration(d: Duration) -> String {
     if minutes > 0 { parts.push(format!("{}min", minutes)); }
     if seconds > 0 || parts.is_empty() { parts.push(format!("{}s", seconds)); }
 
-    let prefix = if d.num_seconds() < 0 { "- " } else { "" };
-    format!("{}{}", prefix, parts.join(" "))
+    format!("{}", parts.join(" "))
 }
 
 pub fn sort_countdowns_by_date(countdowns: &mut Vec<Countdown>) {
