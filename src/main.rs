@@ -9,7 +9,7 @@ use chrono::{DateTime, Utc, Duration};
 use countdown::Countdown;
 use utils::{str_to_datetime, sort_countdowns_by_date};
 
-const VERSION:&str = "0.9.3";
+const VERSION:&str = "1.0.0";
 
 fn load_countdowns(save_file: &str) -> Vec<Countdown> {
     if let Ok(mut file) = File::open(save_file) {
