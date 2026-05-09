@@ -4,7 +4,12 @@ use crate::countdown::Countdown;
 pub fn str_to_datetime(date_str: String) -> DateTime<Utc> {
     let format = "%Y-%m-%d %H:%M:%S";
 
-    let naive_datetime = chrono::NaiveDateTime::parse_from_str(&date_str, format).expect("Invalid format");
+    let naive_datetime = chrono::NaiveDateTime::parse_from_str(&date_str, format)
+        .unwrap_or_else(|_| {
+            eprintln!("Error : invalid date format.");
+            eprintln!("Use the format : YYYY-MM-DD or YYYY-MM-DD HH:MM:SS");
+            std::process::exit(1);
+        });
 
     let datetime_utc: DateTime<Utc> = Utc.from_local_datetime(&naive_datetime).unwrap();
 
