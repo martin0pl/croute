@@ -9,8 +9,6 @@ use chrono::{DateTime, Utc, Duration};
 use countdown::Countdown;
 use utils::{str_to_datetime, sort_countdowns_by_date};
 
-const VERSION:&str = "1.0.0";
-
 fn load_countdowns(save_file: &str) -> Vec<Countdown> {
     if let Ok(mut file) = File::open(save_file) {
         let mut contents = String::new();
@@ -32,89 +30,8 @@ fn save_countdowns(countdowns: &Vec<Countdown>, save_file: &str) {
 }
 
 fn main() {
-    let args: Vec<String> = env::args().skip(1).collect();
-
     let home_dir = env::var("HOME").expect("Impossible to reach HOME directory");
     let save_file = format!("{}/.croute-save.json", home_dir);
 
     let mut countdowns: Vec<Countdown> = load_countdowns(&save_file);
-
-    // If there is no command
-    if args.is_empty()
-    {
-        println!("Croute");
-        println!("Developper : martin0pl");
-        println!("Programming language : Rust");
-        println!("Version : {}",VERSION);
-        println!("Github repository : https://github.com/martin0pl/croute");
-    }
-    else
-    {
-        // croute version
-        if args.len() == 1 && args[0] == "version" {
-            println!("Version : {}",VERSION);
-        }
-        // croute list
-        else if args.len() == 1 && args[0] == "list" {
-            for countdown in countdowns {
-                println!("{}", countdown.to_string());
-            }
-        }
-        // croute delete passed
-        else if args.len() == 2 && args[0] == "delete" && args[1] == "passed" {
-            let initial_len = countdowns.len();
-
-            countdowns.retain(|c| c.get_time_left() >= Duration::zero());
-
-            if countdowns.len() < initial_len {
-                save_countdowns(&countdowns, &save_file);
-                println!("Passed countdowns deleted!");
-            } else {
-                println!("No passed countdowns to delete.");
-            }
-        }
-        // croute delete "countdown name"
-        else if args.len() == 2 && args[0] == "delete" && args[1] != "passed" {
-            let target_title = args[1].clone();
-
-            countdowns.retain(|c| c.get_title() != target_title);
-
-            save_countdowns(&countdowns, &save_file);
-
-            println!("Countdown {} deleted!",target_title);
-        }
-        // croute new "countdown name" YYYY-MM-DD
-        else if args.len() == 3 && args[0] == "new" {
-            let title: String = args[1].clone();
-
-            let date_str: String = args[2].clone() + " " + "00:00:00";
-            let date: DateTime<Utc> = str_to_datetime(date_str);
-
-            countdowns.push(Countdown::new(title, date));
-
-            sort_countdowns_by_date(&mut countdowns);
-
-            save_countdowns(&countdowns, &save_file);
-
-            println!("Countdown added!");
-        }
-        // croute new "countdown name" YYYY-MM-DD HH:MM:SS
-        else if args.len() == 4 && args[0] == "new" {
-            let title: String = args[1].clone();
-
-            let date_str: String = args[2].clone() + " " + &args[3];
-            let date: DateTime<Utc> = str_to_datetime(date_str);
-
-            countdowns.push(Countdown::new(title, date));
-
-            sort_countdowns_by_date(&mut countdowns);
-
-            save_countdowns(&countdowns, &save_file);
-
-            println!("Countdown added!");
-        }
-        else {
-            println!("Invalid command");
-        }
-    }
 }
