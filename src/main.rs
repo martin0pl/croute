@@ -52,7 +52,7 @@ enum Commands {
         date: String,
 
         /// Hour of the countdown
-        #[arg(short, long, default_value_t = String::from("00:00:00"))]
+        #[arg(long, default_value_t = String::from("00:00:00"))]
         hour: String
     }
 }

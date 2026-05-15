@@ -7,7 +7,7 @@ pub fn str_to_datetime(date_str: String) -> DateTime<Utc> {
     let naive_datetime = chrono::NaiveDateTime::parse_from_str(&date_str, format)
         .unwrap_or_else(|_| {
             eprintln!("Error : invalid date format.");
-            eprintln!("Use the format : YYYY-MM-DD or YYYY-MM-DD HH:MM:SS");
+            eprintln!("Use the format : YYYY-MM-DD or YYYY-MM-DD --hour HH:MM:SS");
             std::process::exit(1);
         });
 
