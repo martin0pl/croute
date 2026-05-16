@@ -4,7 +4,7 @@ mod utils;
 use std::env;
 use std::fs::File;
 use std::io::{Read, Write};
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Utc, Duration};
 use clap::{Parser, Subcommand};
 
 use countdown::Countdown;
@@ -56,7 +56,22 @@ enum Commands {
         hour: String
     },
     /// List all your countdowns
-    List
+    List,
+    /// Delete countdown(s)
+    #[command(group(
+            clap::ArgGroup::new("delete_target")
+                .required(true)
+                .multiple(false)
+    ))]
+    Delete {
+        /// Title of the countdown to delete
+        #[arg(short, long, group = "delete_target")]
+        title: Option<String>,
+
+        /// Delete all passed countdowns
+        #[arg(short, long, group = "delete_target")]
+        passed: bool
+    }
 }
 
 fn main() {
@@ -83,6 +98,32 @@ fn main() {
         Commands::List => {
             for countdown in countdowns {
                 println!("{}", countdown.to_string());
+            }
+        },
+        Commands::Delete { title, passed } => {
+            if *passed {
+                let initial_len = countdowns.len();
+    
+                countdowns.retain(|c| c.get_time_left() >= Duration::zero());
+    
+                if countdowns.len() < initial_len {
+                    save_countdowns(&countdowns, &save_file);
+                    println!("Passed countdowns deleted!");
+                } else {
+                    println!("No passed countdowns to delete.");
+                }
+            } 
+            else if let Some(target_title) = title {
+                let initial_len = countdowns.len();
+                    
+                countdowns.retain(|c| c.get_title() != *target_title);
+                    
+                if countdowns.len() < initial_len {
+                    save_countdowns(&countdowns, &save_file);
+                    println!("Countdown '{}' deleted!", target_title);
+                } else {
+                    println!("No countdown found with the title '{}'.", target_title);
+                }
             }
         }
     }
