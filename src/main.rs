@@ -54,7 +54,9 @@ enum Commands {
         /// Hour of the countdown (HH:MM:SS)
         #[arg(long, default_value_t = String::from("00:00:00"))]
         hour: String
-    }
+    },
+    /// List all your countdowns
+    List
 }
 
 fn main() {
@@ -78,5 +80,10 @@ fn main() {
 
             println!("Countdown added!");
         },
+        Commands::List => {
+            for countdown in countdowns {
+                println!("{}", countdown.to_string());
+            }
+        }
     }
 }
