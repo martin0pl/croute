@@ -48,10 +48,10 @@ enum Commands {
         /// Title of the countdown
         title: String,
 
-        /// Date of the countdown
+        /// Date of the countdown (YYYY-MM-DD)
         date: String,
 
-        /// Hour of the countdown
+        /// Hour of the countdown (HH:MM:SS)
         #[arg(long, default_value_t = String::from("00:00:00"))]
         hour: String
     }
