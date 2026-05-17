@@ -9,6 +9,12 @@ Croute is a terminal-based command-line interface (CLI) to manage countdowns any
 3. Give it the permission to be run with `chmod +x croute`
 4. Execute `croute` anywhere on your device
 
+## Features
+
+- Create a coutdown (with date and optionally hour)
+- Delete countdowns
+- Delete passed coutdowns
+
 ## Save file
 
 The save file is ~/.croute-save.json
