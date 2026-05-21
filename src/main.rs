@@ -108,7 +108,7 @@ fn main() {
     
                 if countdowns.len() < initial_len {
                     save_countdowns(&countdowns, &save_file);
-                    println!("Passed countdowns deleted!");
+                    println!("{} passed countdowns deleted!", initial_len - countdowns.len());
                 } else {
                     println!("No passed countdowns to delete.");
                 }
