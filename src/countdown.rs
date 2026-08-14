@@ -2,6 +2,7 @@ use crate::utils::format_duration;
 
 use chrono::{DateTime, Utc, Duration};
 use serde::{Serialize, Deserialize};
+use colored::Colorize;
 
 #[derive(Serialize, Deserialize)]
 pub struct Countdown {
@@ -23,10 +24,10 @@ impl Countdown {
 
     pub fn to_string(&self) -> String {
         if self.get_time_left() < Duration::zero() {
-            return format!("{} {} ago", self.title, format_duration(self.get_time_left()))
+            return format!("{} {} ago", self.title.bold(), format_duration(self.get_time_left()))
         } 
         else {
-            return format!("{} in {}", self.title, format_duration(self.get_time_left()))
+            return format!("{} in {}", self.title.bold(), format_duration(self.get_time_left()))
         }
     }
 

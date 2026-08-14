@@ -6,6 +6,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use chrono::{DateTime, Utc, Duration};
 use clap::{Parser, Subcommand};
+use colored::Colorize;
 
 use countdown::Countdown;
 use utils::{str_to_datetime, sort_countdowns_by_date};
@@ -129,7 +130,7 @@ fn main() {
                 if *target_index < countdowns.len() {
                     let title = countdowns[*target_index].get_title();
                     countdowns.remove(*target_index);
-                    println!("Countdown '{}' deleted!", title);
+                    println!("Countdown '{}' deleted!", title.bold());
                     save_countdowns(&countdowns, &save_file);
                 } else {
                     println!("Index out of range");
