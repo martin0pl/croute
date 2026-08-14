@@ -68,9 +68,9 @@ enum Commands {
                 .multiple(false)
     ))]
     Delete {
-        /// Title of the countdown to delete
+        /// Index of the countdown to delete
         #[arg(short, long, group = "delete_target")]
-        title: Option<String>,
+        index: Option<usize>,
 
         /// Delete all passed countdowns
         #[arg(short, long, group = "delete_target")]
@@ -111,7 +111,7 @@ fn main() {
                 }      
             }
         },
-        Commands::Delete { title, passed } => {
+        Commands::Delete { index, passed } => {
             if *passed {
                 let initial_len = countdowns.len();
     
@@ -124,17 +124,17 @@ fn main() {
                     println!("No passed countdowns to delete.");
                 }
             } 
-            else if let Some(target_title) = title {
-                let initial_len = countdowns.len();
-                    
-                countdowns.retain(|c| c.get_title() != *target_title);
-                    
-                if countdowns.len() < initial_len {
+            else if let Some(target_index) = index {
+
+                if *target_index < countdowns.len() {
+                    let title = countdowns[*target_index].get_title();
+                    countdowns.remove(*target_index);
+                    println!("Countdown '{}' deleted!", title);
                     save_countdowns(&countdowns, &save_file);
-                    println!("Countdown '{}' deleted!", target_title);
                 } else {
-                    println!("No countdown found with the title '{}'.", target_title);
+                    println!("Index out of range");
                 }
+                
             }
         }
     }
