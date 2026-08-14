@@ -56,7 +56,11 @@ enum Commands {
         hour: String
     },
     /// List all your countdowns
-    List,
+    List {
+        /// Show the index of the countdown
+        #[arg(short, long)]
+        index: bool
+    },
     /// Delete countdown(s)
     #[command(group(
             clap::ArgGroup::new("delete_target")
@@ -95,9 +99,16 @@ fn main() {
 
             println!("Countdown added!");
         },
-        Commands::List => {
-            for countdown in countdowns {
-                println!("{}", countdown.to_string());
+        Commands::List { index } => {
+            if *index {
+                for i in 0..countdowns.len() {
+                    println!("{} - {}", i, countdowns[i].to_string());
+                }
+            }
+            else {
+                for countdown in countdowns {
+                    println!("{}", countdown.to_string());
+                }      
             }
         },
         Commands::Delete { title, passed } => {
