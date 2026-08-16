@@ -9,7 +9,7 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 
 use countdown::Countdown;
-use utils::{str_to_datetime, sort_countdowns_by_date};
+use utils::{str_to_datetime, sort_countdowns_by_date, format_duration};
 
 fn load_countdowns(save_file: &str) -> Vec<Countdown> {
     if let Ok(mut file) = File::open(save_file) {
@@ -76,6 +76,9 @@ enum Commands {
         /// Delete all passed countdowns
         #[arg(short, long, group = "delete_target")]
         passed: bool
+    },
+    Info {
+        index: usize
     }
 }
 
@@ -136,6 +139,15 @@ fn main() {
                     println!("Index out of range");
                 }
                 
+            }
+        },
+        Commands::Info { index } => {
+            if *index < countdowns.len() {
+                println!("Title : {}", countdowns[*index].get_title());
+                println!("Date : {}", countdowns[*index].get_date());
+                println!("Time left : {}", format_duration(countdowns[*index].get_time_left()));
+            } else {
+                println!("Index out of range");
             }
         }
     }
