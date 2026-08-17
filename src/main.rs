@@ -101,7 +101,7 @@ fn main() {
 
             save_countdowns(&countdowns, &save_file);
 
-            println!("Countdown added!");
+            println!("Countdown '{}' added!",title.to_string().bold());
         },
         Commands::List { index } => {
             if *index {
