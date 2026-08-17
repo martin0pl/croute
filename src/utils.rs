@@ -1,7 +1,7 @@
-use chrono::{DateTime, Utc, TimeZone, Duration};
+use chrono::{DateTime, Local, TimeZone, Duration};
 use crate::countdown::Countdown;
 
-pub fn str_to_datetime(date_str: String) -> DateTime<Utc> {
+pub fn str_to_datetime(date_str: String) -> DateTime<Local> {
     let format = "%Y-%m-%d %H:%M:%S";
 
     let naive_datetime = chrono::NaiveDateTime::parse_from_str(&date_str, format)
@@ -11,7 +11,7 @@ pub fn str_to_datetime(date_str: String) -> DateTime<Utc> {
             std::process::exit(1);
         });
 
-    let datetime_utc: DateTime<Utc> = Utc.from_local_datetime(&naive_datetime).unwrap();
+    let datetime_utc: DateTime<Local> = Local.from_local_datetime(&naive_datetime).unwrap();
 
     return datetime_utc;
 }

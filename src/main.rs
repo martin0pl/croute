@@ -4,7 +4,7 @@ mod utils;
 use std::env;
 use std::fs::File;
 use std::io::{Read, Write};
-use chrono::{DateTime, Utc, Duration};
+use chrono::{DateTime, Local, Duration};
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 
@@ -93,7 +93,7 @@ fn main() {
     match &cli.command {
         Commands::New { title, date, hour } => {
             let date_str: String = date.to_owned() + " " + hour;
-            let date_clean: DateTime<Utc> = str_to_datetime(date_str);
+            let date_clean: DateTime<Local> = str_to_datetime(date_str);
 
             countdowns.push(Countdown::new(title.to_string(), date_clean));
 
