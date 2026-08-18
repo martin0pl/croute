@@ -38,4 +38,8 @@ impl Countdown {
     pub fn get_title(&self) -> String {
         self.title.clone()
     }
+
+    pub fn set_title(&mut self, new_title: String) {
+        self.title = new_title;
+    }
 }

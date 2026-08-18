@@ -81,6 +81,14 @@ enum Commands {
     Info {
         /// Index of the countdown in the list
         index: usize
+    },
+    /// Rename a countdown
+    Rename {
+        /// Index of the countdown in the list
+        index: usize,
+        
+        /// New title for the countdown
+        new_title : String
     }
 }
 
@@ -114,22 +122,22 @@ fn main() {
             else {
                 for countdown in countdowns {
                     println!("{}", countdown.to_string());
-                }      
+                }
             }
         },
         Commands::Delete { index, passed } => {
             if *passed {
                 let initial_len = countdowns.len();
-    
+
                 countdowns.retain(|c| c.get_time_left() >= Duration::zero());
-    
+
                 if countdowns.len() < initial_len {
                     save_countdowns(&countdowns, &save_file);
                     println!("{} passed countdowns deleted!", initial_len - countdowns.len());
                 } else {
                     println!("No passed countdowns to delete.");
                 }
-            } 
+            }
             else if let Some(target_index) = index {
 
                 if *target_index < countdowns.len() {
@@ -140,7 +148,7 @@ fn main() {
                 } else {
                     println!("Index out of range");
                 }
-                
+
             }
         },
         Commands::Info { index } => {
@@ -148,6 +156,18 @@ fn main() {
                 println!("Title : {}", countdowns[*index].get_title());
                 println!("Date : {}", countdowns[*index].get_date());
                 println!("Time left : {}", format_duration(countdowns[*index].get_time_left()));
+            } else {
+                println!("Index out of range");
+            }
+        },
+        Commands::Rename { index, new_title } => {
+            if *index < countdowns.len() {
+                let old_title = countdowns[*index].get_title();
+                
+                countdowns[*index].set_title(new_title.clone());
+
+                save_countdowns(&countdowns, &save_file);
+                println!("Countdown '{}' renamed to '{}'!",old_title.bold(), new_title.bold());
             } else {
                 println!("Index out of range");
             }
