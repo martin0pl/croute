@@ -77,7 +77,9 @@ enum Commands {
         #[arg(short, long, group = "delete_target")]
         passed: bool
     },
+    /// Details of a countdown
     Info {
+        /// Index of the countdown in the list
         index: usize
     }
 }
