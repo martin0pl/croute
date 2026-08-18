@@ -42,4 +42,8 @@ impl Countdown {
     pub fn set_title(&mut self, new_title: String) {
         self.title = new_title;
     }
+
+    pub fn set_date(&mut self, new_date: DateTime<Local>) {
+        self.date = new_date;
+    }
 }
